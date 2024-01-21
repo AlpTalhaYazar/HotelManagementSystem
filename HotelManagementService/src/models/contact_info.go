@@ -5,9 +5,13 @@ import (
 )
 
 type ContactInfo struct {
-	ID      uuid.UUID `gorm:"primaryKey;type:uuid;default:uuid_generate_v4()" json:"id"`
-	HotelID uuid.UUID `gorm:"type:uuid;not null" json:"hotel_id"`
-	Name    string    `json:"name"`
-	Phone   string    `json:"phone"`
-	Email   string    `json:"email"`
+	Id      uuid.UUID `gorm:"primaryKey;type:uuid;default:uuid_generate_v4();column:Id" json:"id"`
+	HotelId uuid.UUID `gorm:"type:uuid;not null;column:HotelId" json:"hotel_id"`
+	Name    string    `gorm:"column:Name" json:"name"`
+	Phone   string    `gorm:"column:Phone" json:"phone"`
+	Email   string    `gorm:"column:Email" json:"email"`
+}
+
+func (ContactInfo) TableName() string {
+	return "ContactInfos"
 }

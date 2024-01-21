@@ -37,7 +37,7 @@ func GetContactInfo(context *gin.Context, db *gorm.DB) {
 		return
 	}
 
-	result := db.Where("id = ?", context.Query("id")).First(&contactInfo)
+	result := db.Where("Id = ?", context.Query("id")).First(&contactInfo)
 
 	if result.Error != nil {
 		response := utils.NewErrorResponse("Error retrieving contact info!", utils.Error{Code: 404, Message: result.Error.Error()})
@@ -87,7 +87,7 @@ func UpdateContactInfo(context *gin.Context, db *gorm.DB) {
 		return
 	}
 
-	result := db.Where("id = ?", context.Query("id")).First(&contactInfo)
+	result := db.Where("Id = ?", context.Query("id")).First(&contactInfo)
 
 	if result.Error != nil {
 		response := utils.NewErrorResponse("Error retrieving contact info!", utils.Error{Code: 404, Message: result.Error.Error()})
@@ -130,7 +130,7 @@ func DeleteContactInfo(context *gin.Context, db *gorm.DB) {
 		return
 	}
 
-	result := db.Where("id = ?", context.Query("id")).First(&contactInfo)
+	result := db.Where("Id = ?", context.Query("id")).First(&contactInfo)
 
 	if result.Error != nil {
 		response := utils.NewErrorResponse("Error deleting contact info!", utils.Error{Code: 404, Message: "Record not found!"})
@@ -164,7 +164,7 @@ func GetContactInfosByHotelId(context *gin.Context, db *gorm.DB) {
 		return
 	}
 
-	result := db.Where("hotel_id = ?", context.Query("hotel_id")).Find(&contactInfos)
+	result := db.Where("HotelId = ?", context.Query("hotel_id")).Find(&contactInfos)
 
 	if result.Error != nil {
 		response := utils.NewErrorResponse("Error retrieving contact infos!", utils.Error{Code: 404, Message: result.Error.Error()})

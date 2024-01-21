@@ -38,7 +38,7 @@ func GetHotel(context *gin.Context, db *gorm.DB) {
 		return
 	}
 
-	result := db.Where("id = ?", context.Query("id")).First(&hotel)
+	result := db.Where("Id = ?", context.Query("id")).First(&hotel)
 
 	if result.Error != nil {
 		response := utils.NewErrorResponse("Error retrieving hotel!", utils.Error{Code: 404, Message: result.Error.Error()})
@@ -90,7 +90,7 @@ func UpdateHotel(context *gin.Context, db *gorm.DB) {
 		return
 	}
 
-	result := db.Where("id = ?", context.Query("id")).First(&hotel)
+	result := db.Where("Id = ?", context.Query("id")).First(&hotel)
 
 	if result.Error != nil {
 		response := utils.NewErrorResponse("Error retrieving hotel!", utils.Error{Code: 404, Message: result.Error.Error()})
@@ -133,7 +133,7 @@ func DeleteHotel(context *gin.Context, db *gorm.DB) {
 		return
 	}
 
-	result := db.Where("id = ?", context.Query("id")).First(&hotel)
+	result := db.Where("Id = ?", context.Query("id")).First(&hotel)
 
 	if result.Error != nil {
 		response := utils.NewErrorResponse("Error retrieving hotel!", utils.Error{Code: 404, Message: result.Error.Error()})

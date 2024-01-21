@@ -5,10 +5,14 @@ import (
 )
 
 type Hotel struct {
-	ID          uuid.UUID `gorm:"primaryKey;type:uuid;default:uuid_generate_v4()" json:"id"`
-	Name        string    `json:"name"`
-	Description string    `json:"description"`
-	City        string    `json:"city"`
-	Country     string    `json:"country"`
-	Stars       int       `json:"stars"`
+	Id          uuid.UUID `gorm:"primaryKey;type:uuid;default:uuid_generate_v4();column:Id" json:"id"`
+	Name        string    `gorm:"column:Name" json:"name"`
+	Description string    `gorm:"column:Description" json:"description"`
+	City        string    `gorm:"column:City" json:"city"`
+	Country     string    `gorm:"column:Country" json:"country"`
+	Stars       int       `gorm:"column:Stars" json:"stars"`
+}
+
+func (Hotel) TableName() string {
+	return "Hotels"
 }
