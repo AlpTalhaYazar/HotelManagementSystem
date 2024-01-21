@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Reporting.Data;
 using ReportingService.Messaging;
+using ReportingService.Services;
 using ReportingService.Utils;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,6 +21,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddSingleton<IMessagePublisher, RabbitMQPublisher>();
+builder.Services.AddScoped<IReportService, ReportService>();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

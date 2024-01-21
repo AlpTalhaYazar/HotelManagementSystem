@@ -27,6 +27,10 @@ public class ReportsController : ControllerBase
     {
         Report report = await _reportService.CreateReportAsync(reportCreateDto);
 
+        string reportJson = JsonSerializer.Serialize<Report>(report);
+        
+        await _messagePublisher.PublishReportRequestAsync(reportJson);
+
         APIResponse<Report> apiResponse = new();
         apiResponse.Status = true;
         apiResponse.Message = "Report request has been sent successfully";
