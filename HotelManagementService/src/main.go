@@ -1,7 +1,14 @@
 package main
 
-import "fmt"
+import (
+	"github.com/alptalhayazar/hotelmanagementsystem/hotelmanagementservice/src/db"
+	"log"
+)
 
 func main() {
-	fmt.Print("Project Hotel Management Service")
+	_, databaseErr := db.ConnectDatabase("Default")
+
+	if databaseErr != nil {
+		log.Panicf("Error connecting to database: %v", databaseErr)
+	}
 }
