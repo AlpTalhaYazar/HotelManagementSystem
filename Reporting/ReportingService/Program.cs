@@ -1,4 +1,20 @@
+using Microsoft.EntityFrameworkCore;
+using Reporting.Data;
+using ReportingService.Utils;
+
 var builder = WebApplication.CreateBuilder(args);
+
+var databaseConfigurations = builder.Configuration.GetSection("Database").Get<List<DatabaseConfiguration>>();
+
+var defaultDatabaseConfiguration = databaseConfigurations.FirstOrDefault(x => x.Name == "Default");
+
+if (defaultDatabaseConfiguration is null)
+{
+    throw new Exception("Default database configuration not found");
+}
+
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseNpgsql(defaultDatabaseConfiguration.ConnectionString));
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
