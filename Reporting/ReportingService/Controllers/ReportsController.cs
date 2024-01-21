@@ -23,10 +23,12 @@ public class ReportsController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Post(ReportCreateDto reportCreateDto)
     {
+        Report report = await _reportService.CreateReportAsync(reportCreateDto);
+
         APIResponse<Report> apiResponse = new();
         apiResponse.Status = true;
         apiResponse.Message = "Report request has been sent successfully";
-        apiResponse.Data = new Report();
+        apiResponse.Data = report;
 
         return Accepted(apiResponse);
     }

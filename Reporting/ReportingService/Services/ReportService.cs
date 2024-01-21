@@ -17,11 +17,37 @@ public class ReportService : IReportService
 
     public async Task<Report> CreateReportAsync(ReportCreateDto reportCreateDto)
     {
-        throw new NotImplementedException();
+        Report report = new();
+        report.RequestedDate = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc);
+        report.Status = ReportStatus.Pending;
+        report.City = reportCreateDto.City;
+        report.Country = reportCreateDto.Country;
+        report.HotelCount = 0;
+        report.PhoneNumberCount = 0;
+
+        await _context.Reports.AddAsync(report);
+        await _context.SaveChangesAsync();
+
+        return report;
     }
 
     public async Task<Report> UpdateReportAsync(Guid id, ReportUpdateDto reportUpdateDto)
     {
-        throw new NotImplementedException();
+        var report = await _context.Reports.FirstOrDefaultAsync(x => x.Id == id);
+
+        if (report is null)
+        {
+            throw new InvalidOperationException("Report not found");
+        }
+
+        report.Status = reportUpdateDto.Status;
+        report.HotelCount = reportUpdateDto.HotelCount;
+        report.PhoneNumberCount = reportUpdateDto.PhoneNumberCount;
+
+        _context.Reports.Update(report);
+
+        await _context.SaveChangesAsync();
+
+        return report;
     }
 }
