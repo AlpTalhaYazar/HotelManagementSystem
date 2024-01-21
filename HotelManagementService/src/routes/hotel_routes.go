@@ -1,7 +1,7 @@
 package routes
 
 import (
-	"fmt"
+	"github.com/alptalhayazar/hotelmanagementsystem/hotelmanagementservice/src/handlers"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 )
@@ -11,19 +11,19 @@ func HotelRoutes(router *gin.RouterGroup, db *gorm.DB) {
 	{
 		hotelGroup.GET("", func(context *gin.Context) {
 			if context.Query("id") != "" {
-				fmt.Printf("ID: %s\n", context.Query("id"))
+				handlers.GetHotel(context, db)
 			} else {
-				fmt.Println("ID: not found")
+				handlers.GetHotels(context, db)
 			}
 		})
 		hotelGroup.POST("", func(context *gin.Context) {
-			fmt.Println("POST")
+			handlers.CreateHotel(context, db)
 		})
 		hotelGroup.PUT("", func(context *gin.Context) {
-			fmt.Println("PUT")
+			handlers.UpdateHotel(context, db)
 		})
 		hotelGroup.DELETE("", func(context *gin.Context) {
-			fmt.Println("DELETE")
+			handlers.DeleteHotel(context, db)
 		})
 	}
 }
