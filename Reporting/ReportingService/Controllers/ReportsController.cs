@@ -13,10 +13,12 @@ namespace ReportingService.Controllers;
 [Route("[controller]")]
 public class ReportsController : ControllerBase
 {
+    private readonly IMessagePublisher _messagePublisher;
     private readonly IReportService _reportService;
 
     public ReportsController(IMessagePublisher messagePublisher, IReportService reportService)
     {
+        _messagePublisher = messagePublisher;
         _reportService = reportService;
     }
 
