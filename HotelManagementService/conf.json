@@ -1,0 +1,12 @@
+{
+  "databases": [
+    {
+      "name": "Default",
+      "connectionString": "host=localhost user=postgres dbname=hotel_management_system port=5432 sslmode=disable TimeZone=Asia/Istanbul"
+    },
+    {
+      "name": "Test",
+      "connectionString": "host=localhost user=postgres dbname=hotel_management_system_test port=5432 sslmode=disable TimeZone=Asia/Istanbul"
+    }
+  ]
+}
