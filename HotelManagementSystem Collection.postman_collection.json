@@ -1,0 +1,403 @@
+{
+	"info": {
+		"_postman_id": "d5ae726d-30df-4df3-8204-fd6d085cbddf",
+		"name": "HotelManagementSystem Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26569359"
+	},
+	"item": [
+		{
+			"name": "Hotel",
+			"item": [
+				{
+					"name": "Create Hotel",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"qwe\",\n\t\"description\":\"qwe\",\n\t\"city\":\"İstanbul\",\n\t\"country\":\"Türkiye\",\n\t\"stars\": 5\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/hotels/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"hotels",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Hotels",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/hotels",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"hotels"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Hotel By ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Fixed status code test",
+									"pm.test(\"Response status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"// Fixed Content-Type header test",
+									"pm.test(\"Content-Type header is application/json\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+									"});",
+									"",
+									"// Fixed validation of required fields and stars",
+									"pm.test(\"Response has the required fields - id, name, description, city, country, and stars\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData.data).to.be.an('object').and.to.have.all.keys('id', 'name', 'description', 'city', 'country', 'stars');",
+									"});",
+									"",
+									"pm.test(\"Stars field is a non-negative integer\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData.data.stars).to.be.a('number').and.satisfy((value) => value >= 0, \"Stars should be a non-negative integer\");",
+									"});",
+									"",
+									"pm.test(\"Message field is an empty string\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData.message).to.be.a('string').and.to.equal(\"\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/hotels?id=5700c09e-a594-4dc0-8557-0a6d15dae420",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"hotels"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "5700c09e-a594-4dc0-8557-0a6d15dae420"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Contact Info By ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/contact_infos?id=1fe3b3f0-bc7c-4587-b1ab-c8d4b8304fb6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"contact_infos"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1fe3b3f0-bc7c-4587-b1ab-c8d4b8304fb6"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Hotel By ID",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"asd\",\n\t\"description\":\"asd\",\n\t\"city\":\"asd\",\n\t\"country\":\"asd\",\n\t\"stars\": 4\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/hotels?id=d6c4d2fa-d6ae-42b6-960d-233c8588f305",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"hotels"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "d6c4d2fa-d6ae-42b6-960d-233c8588f305"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Contact Info",
+			"item": [
+				{
+					"name": "Get Contact Infos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/contact_infos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"contact_infos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Contact Info",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"hotel_id\": \"1fe3b3f0-bc7c-4587-b1ab-c8d4b8304fb6\",\n\t\"name\": \"talha\",\n\t\"phone\": \"456\",\n\t\"email\": \"talha@gmail\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/contact_infos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"contact_infos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Contact Info By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/contact_infos?id=a11f725e-8b29-4818-abba-d872880ef325",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"contact_infos"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "a11f725e-8b29-4818-abba-d872880ef325"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Contact Info By Hotel ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/contact_infos?by_hotel_id=123e4567-e89b-12d3-a456-426614174000",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"contact_infos"
+							],
+							"query": [
+								{
+									"key": "by_hotel_id",
+									"value": "123e4567-e89b-12d3-a456-426614174000"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Contact Info By ID",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"hotel_id\":\"123e4567-e89b-12d3-a456-426614174000\",\n\t\"name\":\"asd\",\n\t\"phone\":\"999\",\n\t\"email\":\"asd@asd\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/contact_infos?id=a11f725e-8b29-4818-abba-d872880ef325",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"contact_infos"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "a11f725e-8b29-4818-abba-d872880ef325"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Hotel By ID Copy",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/contact_infos?id=081d3479-d0f7-49f2-94c8-fcf99bd4a2ff",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"contact_infos"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "081d3479-d0f7-49f2-94c8-fcf99bd4a2ff"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Report",
+			"item": [
+				{
+					"name": "Create Report Request",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"City\": \"Ankara\",\n    \"Country\": \"Türkiye\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5276/Reports",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5276",
+							"path": [
+								"Reports"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
