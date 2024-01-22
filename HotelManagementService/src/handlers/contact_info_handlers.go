@@ -37,7 +37,7 @@ func GetContactInfo(context *gin.Context, db *gorm.DB) {
 		return
 	}
 
-	result := db.Where("Id = ?", context.Query("id")).First(&contactInfo)
+	result := db.Where("\"Id\" = ?", context.Query("id")).First(&contactInfo)
 
 	if result.Error != nil {
 		response := utils.NewErrorResponse("Error retrieving contact info!", utils.Error{Code: 404, Message: result.Error.Error()})
@@ -61,6 +61,8 @@ func CreateContactInfo(context *gin.Context, db *gorm.DB) {
 		context.JSON(http.StatusBadRequest, response)
 		return
 	}
+
+	contactInfo.Id = uuid.New()
 
 	dbCreateResult := db.Create(&contactInfo)
 

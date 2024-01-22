@@ -38,7 +38,7 @@ func GetHotel(context *gin.Context, db *gorm.DB) {
 		return
 	}
 
-	result := db.Where("Id = ?", context.Query("id")).First(&hotel)
+	result := db.Where("\"Id\" = ?", context.Query("id")).First(&hotel)
 
 	if result.Error != nil {
 		response := utils.NewErrorResponse("Error retrieving hotel!", utils.Error{Code: 404, Message: result.Error.Error()})
@@ -62,6 +62,8 @@ func CreateHotel(context *gin.Context, db *gorm.DB) {
 		context.JSON(http.StatusBadRequest, response)
 		return
 	}
+
+	hotel.Id = uuid.New()
 
 	result := db.Create(&hotel)
 

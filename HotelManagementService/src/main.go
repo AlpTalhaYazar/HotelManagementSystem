@@ -13,10 +13,10 @@ func main() {
 		log.Panicf("Error connecting to database: %v", databaseErr)
 	}
 
-	databaseMigrationError := db.MigrateDatabase(database)
-	if databaseMigrationError != nil {
-		log.Panicf("Error migrating database: %v", databaseMigrationError)
-	}
+	//databaseMigrationError := db.MigrateDatabase(database)
+	//if databaseMigrationError != nil {
+	//	log.Panicf("Error migrating database: %v", databaseMigrationError)
+	//}
 
 	router := routes.SetupRoutes(database)
 

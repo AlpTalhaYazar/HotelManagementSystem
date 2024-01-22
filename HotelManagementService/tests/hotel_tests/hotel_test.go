@@ -37,7 +37,7 @@ func TestGetHotelById(t *testing.T) {
 
 	rows := sqlmock.NewRows([]string{"Id", "Name", "Description", "City", "Country", "Stars"})
 	rows.AddRow("1fe3b3f0-bc7c-4587-b1ab-c8d4b8304fb6", "Hotel 1", "Description 1", "City 1", "Country 1", 5)
-	mock.ExpectQuery("^SELECT \\* FROM \"Hotels\" WHERE Id = \\$1 ORDER BY \"Hotels\".\"Id\" LIMIT 1$").WithArgs("1fe3b3f0-bc7c-4587-b1ab-c8d4b8304fb6").WillReturnRows(rows)
+	mock.ExpectQuery("^SELECT \\* FROM \"Hotels\" WHERE \"Id\" = \\$1 ORDER BY \"Hotels\".\"Id\" LIMIT 1$").WithArgs("1fe3b3f0-bc7c-4587-b1ab-c8d4b8304fb6").WillReturnRows(rows)
 
 	utils.RunTest(t, ts, "/api/hotels?id=1fe3b3f0-bc7c-4587-b1ab-c8d4b8304fb6", 200, mock)
 }
@@ -51,7 +51,7 @@ func TestGetHotelByIdNotFound(t *testing.T) {
 	}
 	defer teardown()
 
-	mock.ExpectQuery("^SELECT \\* FROM \"Hotels\" WHERE Id = \\$1 ORDER BY \"Hotels\".\"Id\" LIMIT 1$").WithArgs("1fe3b3f0-bc7c-4587-b1ab-c8d4b8304fb6").WillReturnError(gorm.ErrRecordNotFound)
+	mock.ExpectQuery("^SELECT \\* FROM \"Hotels\" WHERE \"Id\" = \\$1 ORDER BY \"Hotels\".\"Id\" LIMIT 1$").WithArgs("1fe3b3f0-bc7c-4587-b1ab-c8d4b8304fb6").WillReturnError(gorm.ErrRecordNotFound)
 
 	utils.RunTest(t, ts, "/api/hotels?id=1fe3b3f0-bc7c-4587-b1ab-c8d4b8304fb6", 404, mock)
 }
